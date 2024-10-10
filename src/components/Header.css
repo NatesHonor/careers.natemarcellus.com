@@ -36,9 +36,24 @@
     background-color: #007bff;
     color: white;
     border-radius: 5px;
+    border: none;
+    cursor: pointer;
   }
   
   .header-right .login-button:hover {
     background-color: #0056b3;
   }
   
+  .header-right .post-button {
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+  .header-right .post-button:hover {
+    background-color: #218838; 
+}

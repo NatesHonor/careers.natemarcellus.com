@@ -1,26 +1,210 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-function Header() {
-  return (
-    <header className="header">
-      <div className="header-left">
-        <h1>Nates Services</h1>
-      </div>
-      <nav className="header-center">
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/listings">Careers</Link></li>
-          <li><Link to="/staff">Current Staff</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
-        </ul>
-      </nav>
-      <div className="header-right">
-        <a href="https://natemarcellus.com/login" className="login-button">Login</a>
-      </div>
-    </header>
-  );
-}
+const Header = ({ onJobPost }) => {
+    const [newJob, setNewJob] = useState({
+        jobTitle: '',
+        remote: false,
+        shortDescription: '',
+        requirements: '',
+        customQuestions: '',
+        company: '',
+        tags: [],
+        category: ''
+    });
+    const [isPosting, setIsPosting] = useState(false);
+    const [postError, setPostError] = useState(null);
+    const [showPostForm, setShowPostForm] = useState(false);
+
+    const handleInputChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setNewJob((prevJob) => ({
+            ...prevJob,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    const handleLoginClick = () => {
+        window.location.href = "https://natemarcellus.com/login"; 
+    };
+
+    const handleTagChange = (e) => {
+        const value = e.target.value;
+        if (value.endsWith(',')) {
+            const tag = value.slice(0, -1).trim();
+            if (tag && !newJob.tags.includes(tag)) {
+                setNewJob((prevJob) => ({
+                    ...prevJob,
+                    tags: [...prevJob.tags, tag]
+                }));
+            }
+            e.target.value = '';
+        }
+    };
+
+    const handleTagRemove = (tagToRemove) => {
+        setNewJob((prevJob) => ({
+            ...prevJob,
+            tags: prevJob.tags.filter((tag) => tag !== tagToRemove)
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsPosting(true);
+        setPostError(null);
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/careers/post`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': process.env.REACT_APP_API_KEY
+                },
+                body: JSON.stringify(newJob)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to post the job listing');
+            }
+
+            const data = await response.json();
+            onJobPost(data);
+            setNewJob({
+                jobTitle: '',
+                remote: false,
+                shortDescription: '',
+                requirements: '',
+                customQuestions: '',
+                company: '',
+                tags: [],
+                category: ''
+            });
+        } catch (error) {
+            setPostError(error.message);
+        } finally {
+            setIsPosting(false);
+        }
+    };
+
+    const togglePostForm = () => {
+        setShowPostForm((prevShow) => !prevShow);
+    };
+
+    return (
+        <header className="header">
+            <div className="header-left">
+                <h1>Nates Services</h1>
+            </div>
+            <nav className="header-center">
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/listings">Careers</Link></li>
+                    <li><Link to="/staff">Current Staff</Link></li>
+                    <li><Link to="/contact">Contact</Link></li>
+                </ul>
+            </nav>
+            <div className="header-right">
+                <button className="post-button" onClick={togglePostForm}>Post Job</button>
+                <button className="login-button" onClick={handleLoginClick}>Login</button>
+            </div>
+            {showPostForm && (
+                <form className="post-job-form" onSubmit={handleSubmit}>
+                    <h2>Post a New Job</h2>
+                    <label>
+                        Job Title:
+                        <input
+                            type="text"
+                            name="jobTitle"
+                            value={newJob.jobTitle}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Remote:
+                        <input
+                            type="checkbox"
+                            name="remote"
+                            checked={newJob.remote}
+                            onChange={handleInputChange}
+                        />
+                    </label>
+                    <label>
+                        Short Description:
+                        <textarea
+                            name="shortDescription"
+                            value={newJob.shortDescription}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Requirements:
+                        <textarea
+                            name="requirements"
+                            value={newJob.requirements}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Custom Questions:
+                        <textarea
+                            name="customQuestions"
+                            value={newJob.customQuestions}
+                            onChange={handleInputChange}
+                        />
+                    </label>
+                    <label>
+                        Company:
+                        <select
+                            name="company"
+                            value={newJob.company}
+                            onChange={handleInputChange}
+                            required
+                        >
+                            <option value="">Select a company</option>
+                            <option value="FakeNetwork">Fake Network</option>
+                            <option value="Nates Services">Nates Services</option>
+                        </select>
+                    </label>
+                    <label>
+                        Category:
+                        <select
+                            name="category"
+                            value={newJob.category}
+                            onChange={handleInputChange}
+                            required
+                        >
+                            <option value="">Select a category</option>
+                        </select>
+                    </label>
+                    <label>
+                        Tags:
+                        <input
+                            type="text"
+                            onKeyUp={handleTagChange}
+                            placeholder="Press enter to add tags, separate by commas"
+                        />
+                        <div className="tag-container">
+                            {newJob.tags.map((tag) => (
+                                <span key={tag} className="tag">
+                                    {tag}
+                                    <button type="button" onClick={() => handleTagRemove(tag)}>x</button>
+                                </span>
+                            ))}
+                        </div>
+                    </label>
+                    <button type="submit" disabled={isPosting}>
+                        {isPosting ? 'Posting...' : 'Post Job'}
+                    </button>
+                    {postError && <div className="error">{postError}</div>}
+                </form>
+            )}
+        </header>
+    );
+};
 
 export default Header;
