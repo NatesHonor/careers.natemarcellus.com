@@ -261,6 +261,16 @@ const Header = () => {
                         />
                     </label>
                     <label>
+                        Benefits:
+                        <input
+                            type="text"
+                            name="benefits"
+                            value={newJob.benefits}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </label>
+                    <label>
                         Type:
                         <select
                             name="type"
