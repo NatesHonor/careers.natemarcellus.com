@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import './styles/bootstrap.min.css'; 
-import './styles/owl.carousel.min.css'; 
-import './styles/slicknav.css'; 
+import './styles/bootstrap.min.css';
+import './styles/owl.carousel.min.css';
+import './styles/slicknav.css';
 import './styles/animate.min.css';
 import './styles/magnific-popup.css';
 import './styles/themify-icons.css';
@@ -13,6 +13,7 @@ import './styles/style.css';
 import categories from '../components/Categories';
 import './styles/JobPage.css';
 
+// Function to fetch the category icon
 const getCategoryIcon = (categoryName) => {
     const category = categories.find((cat) => cat.name === categoryName);
     return category ? category.icon : null;
@@ -49,9 +50,23 @@ const JobPage = () => {
         fetchJobDetails();
     }, [jobID]);
 
+    useEffect(() => {
+        if (job) {
+            document.title = job.jobTitle;
+
+            const metaTitle = document.querySelector('meta[property="og:title"]');
+            const metaDescription = document.querySelector('meta[property="og:description"]');
+            const metaUrl = document.querySelector('meta[property="og:url"]');
+
+            if (metaTitle) metaTitle.setAttribute('content', job.jobTitle);
+            if (metaDescription) metaDescription.setAttribute('content', job.shortDescription);
+            if (metaUrl) metaUrl.setAttribute('content', window.location.href);
+        }
+    }, [job]);
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return date.toLocaleDateString('en-US', options);
     };
 
@@ -68,13 +83,13 @@ const JobPage = () => {
     }
 
     const logoSrc = getCategoryIcon(job.category);
+
     return (
         <div>
             <header>
                 <div className="header-area header-transparent">
                     <div className="main-header header-sticky sticky-bar">
-                        <div className="container">
-                        </div>
+                        <div className="container"></div>
                     </div>
                 </div>
             </header>
@@ -220,6 +235,7 @@ const JobPage = () => {
                                     </form>
                                 </div>
                             </div>
+
                             <div className="col-lg-4">
                                 <div className="job_sumary">
                                     <div className="summery_header">
