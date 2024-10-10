@@ -18,7 +18,6 @@ const getCategoryIcon = (categoryName) => {
     return category ? category.icon : null;
 };
 
-
 const JobPage = () => {
     const { jobID } = useParams();
     const [job, setJob] = useState(null);
@@ -67,6 +66,7 @@ const JobPage = () => {
     if (!job) {
         return <div className="error">Job not found</div>;
     }
+
     const logoSrc = getCategoryIcon(job.category);
     return (
         <div>
@@ -104,7 +104,7 @@ const JobPage = () => {
                                     <div className="single_jobs white-bg d-flex justify-content-between">
                                         <div className="jobs_left d-flex align-items-center">
                                             <div className="thumb">
-                                              {logoSrc}
+                                                {logoSrc}
                                             </div>
                                             <div className="jobs_content">
                                                 <h4>{job.jobTitle}</h4>
@@ -129,12 +129,21 @@ const JobPage = () => {
                                 <div className="descript_wrap white-bg">
                                     <div className="single_wrap">
                                         <h4>Job Description</h4>
-                                        <p>{job.shortDescription}</p>
+                                        <p>
+                                            {job.shortDescription.split('\n').map((line, index) => (
+                                                <span key={index}>
+                                                    {line}
+                                                    <br />
+                                                </span>
+                                            ))}
+                                        </p>
                                     </div>
                                     <div className="single_wrap">
                                         <h4>Responsibilities</h4>
                                         <ul>
-                                            <li>{job.requirements}</li>
+                                            {job.requirements.split('\n').map((line, index) => (
+                                                <li key={index}>{line}</li>
+                                            ))}
                                         </ul>
                                     </div>
                                     {job.customQuestions.length > 0 && (
@@ -149,7 +158,11 @@ const JobPage = () => {
                                     )}
                                     <div className="single_wrap">
                                         <h4>Benefits</h4>
-                                        <p>Check our company benefits and perks!</p>
+                                        <ul>
+                                            {job.benefits.split('\n').map((line, index) => (
+                                                <li key={index}>{line}</li>
+                                            ))}
+                                        </ul>
                                     </div>
                                 </div>
 
@@ -199,12 +212,12 @@ const JobPage = () => {
                                     </form>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
-                                <div class="job_sumary">
-                                    <div class="summery_header">
-                                        <h3>Job Summery</h3>
+                            <div className="col-lg-4">
+                                <div className="job_sumary">
+                                    <div className="summery_header">
+                                        <h3>Job Summary</h3>
                                     </div>
-                                    <div class="job_content">
+                                    <div className="job_content">
                                         <ul>
                                             <li>Published on: <span>{formatDate(job.postingDate)}</span></li>
                                             <li>Vacancy: <span>{job.positions || "Not specified"}</span></li>
