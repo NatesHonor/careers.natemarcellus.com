@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Cookies from 'js-cookie'; // Importing js-cookie
+import Cookies from 'js-cookie';
 import './Header.css';
 import categories from '../components/Categories';
 
@@ -22,12 +22,15 @@ const Header = () => {
     const [postError, setPostError] = useState(null);
     const [showPostForm, setShowPostForm] = useState(false);
     const [username, setUsername] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const storedUsername = Cookies.get('username');
+        const role = Cookies.get('role');
         if (storedUsername) {
             setUsername(storedUsername);
         }
+        setIsAdmin(role === 'administrator');
     }, []);
 
     const handleInputChange = (e) => {
@@ -41,14 +44,14 @@ const Header = () => {
     const handlePositionChange = (e) => {
         setNewJob((prevJob) => ({
             ...prevJob,
-            positions: Number(e.target.value) // Ensure it's a number
+            positions: Number(e.target.value)
         }));
     };
 
     const handleSalaryChange = (e) => {
         setNewJob((prevJob) => ({
             ...prevJob,
-            salary: e.target.value // Capture salary as a string
+            salary: e.target.value
         }));
     };
 
@@ -135,16 +138,17 @@ const Header = () => {
             </nav>
             <div className="header-right">
                 {username ? (
-                    <span>Hello, {username}</span> // Greet the user if they are logged in
+                    <span>Hello, {username}</span> 
                 ) : (
                     <button className="login-button" onClick={handleLoginClick}>Login</button>
                 )}
-                <button className="post-button" onClick={togglePostForm}>Post Job</button>
+                {isAdmin && (
+                    <button className="post-button" onClick={togglePostForm}>Post Job</button>
+                )}
             </div>
             {showPostForm && (
                 <form className="post-job-form" onSubmit={handleSubmit}>
                     <h2>Post a New Job</h2>
-                    {/* Form fields */}
                     <label>
                         Job Title:
                         <input
