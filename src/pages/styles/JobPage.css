@@ -14,3 +14,9 @@
 .location {
     margin-left: 10px;
 }
+
+.single_wrap ul, p {
+    text-align: left;
+    list-style-position: inside;
+    padding-left: 0;
+}
