@@ -262,8 +262,7 @@ const Header = () => {
                     </label>
                     <label>
                         Benefits:
-                        <input
-                            type="text"
+                        <textarea
                             name="benefits"
                             value={newJob.benefits}
                             onChange={handleInputChange}
