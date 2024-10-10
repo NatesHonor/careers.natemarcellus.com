@@ -219,6 +219,15 @@ const Header = () => {
                         />
                     </label>
                     <label>
+                        Responsibilities:
+                        <textarea
+                            name="responsibilities"
+                            value={newJob.responsibilities}
+                            onChange={handleInputChange}
+                            required
+                        />
+                    </label>
+                    <label>
                         Custom Questions:
                         <textarea
                             name="customQuestions"

@@ -141,6 +141,14 @@ const JobPage = () => {
                                     <div className="single_wrap">
                                         <h4>Responsibilities</h4>
                                         <ul>
+                                            {job.responsibilities.split('\n').map((line, index) => (
+                                                <li key={index}>{line}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div className="single_wrap">
+                                        <h4>Requirements</h4>
+                                        <ul>
                                             {job.requirements.split('\n').map((line, index) => (
                                                 <li key={index}>{line}</li>
                                             ))}
