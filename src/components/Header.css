@@ -1,59 +1,112 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f1f5f9;
-  }
-  
-  .header-left h1 {
-    margin-top: 20px;
-    margin-right: -80px;
-    font-size: 20px;
-  }
-  
-  .header-center ul {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .header-center ul li {
-    display: flex;
-  }
-  
-  .header-center ul li a {
-    text-decoration: none;
-    color: #000;
-    font-weight: bold;
-  }
-  
-  .header-right .login-button {
-    text-decoration: none;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .header-right .login-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .header-right .post-button {
-    text-decoration: none;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f1f5f9;
 }
 
-  .header-right .post-button:hover {
-    background-color: #218838; 
+.header-left h1 {
+  margin-top: 20px;
+  margin-right: -80px;
+  font-size: 20px;
+}
+
+.header-center ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.header-center ul li {
+  display: flex;
+}
+
+.header-center ul li a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+}
+
+.header-right {
+  display: flex;
+  gap: 20px;
+}
+
+.header-right .login-button {
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.header-right .login-button:hover {
+  background-color: #0056b3;
+}
+
+.header-right .post-button {
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.header-right .post-button:hover {
+  background-color: #218838; 
+}
+
+.header-right .post-button:active {
+  background-color: #1e7e34;
+  transform: translateY(2px);
+}
+
+.post-job-form-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ccc;
+}
+
+.post-job-form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 15px;
+}
+
+.post-job-form label {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-job-form input,
+.post-job-form select,
+.post-job-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.post-job-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.post-job-form button:hover {
+  background-color: #0056b3;
 }
