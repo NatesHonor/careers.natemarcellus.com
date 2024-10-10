@@ -1,0 +1,12 @@
+.thumb {
+    width: 100px;
+    height: 100px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.thumb img {
+    width: 100%;
+    height: auto;
+}
