@@ -8,6 +8,12 @@ import Contact from './pages/Contact';
 import Listings from './pages/Listings';
 
 function App() {
+  if (window.ResizeObserver) {
+    const ro = new ResizeObserver(() => {});
+    ro.observe(document.body);
+  }
+  
+
   return (
     <Router>
       <div className="App">
