@@ -34,7 +34,7 @@ const Header = () => {
 
         const fetchUserRole = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/role`, {
+                const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/user/role`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
