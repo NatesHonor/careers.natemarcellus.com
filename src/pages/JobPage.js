@@ -110,10 +110,10 @@ const JobPage = () => {
                                                 <h4>{job.jobTitle}</h4>
                                                 <div className="links_locat d-flex align-items-center">
                                                     <div className="location">
-                                                        <p><i className="fas fa-map-marker-alt"></i> {job.location || "Location not specified"}</p>
+                                                        <p><i className="fas fa-map-marker-alt"></i> {job.remote ? "Remote" : "On-site"}</p>
                                                     </div>
                                                     <div className="location">
-                                                        <p><i className="far fa-clock"></i> {job.remote ? "Remote" : "On-site"}</p>
+                                                        <p><i className="far fa-clock"></i> {job.type || "Type not specified"}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -199,18 +199,17 @@ const JobPage = () => {
                                     </form>
                                 </div>
                             </div>
-                            <div className="col-lg-4">
-                                <div className="job_summary">
-                                    <div className="summary_header">
-                                        <h3>Job Summary</h3>
+                            <div class="col-lg-4">
+                                <div class="job_sumary">
+                                    <div class="summery_header">
+                                        <h3>Job Summery</h3>
                                     </div>
-                                    <div className="job_content">
+                                    <div class="job_content">
                                         <ul>
                                             <li>Published on: <span>{formatDate(job.postingDate)}</span></li>
-                                            <li>Vacancy: <span>{job.vacancy || "Not specified"}</span></li>
+                                            <li>Vacancy: <span>{job.positions || "Not specified"}</span></li>
                                             <li>Salary: <span>{job.salary || "Not specified"}</span></li>
-                                            <li>Job type: <span>{job.jobType || "Not specified"}</span></li>
-                                            <li>Experience: <span>{job.experience || "Not specified"}</span></li>
+                                            <li>Job type: <span>{job.type || "Not specified"}</span></li>
                                         </ul>
                                     </div>
                                 </div>
