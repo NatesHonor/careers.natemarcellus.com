@@ -23,10 +23,12 @@ const Header = () => {
     const [showPostForm, setShowPostForm] = useState(false);
     const [username, setUsername] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
+    const [token, setToken] = useState('');  // Declare token state
 
     useEffect(() => {
         const storedUsername = Cookies.get('username');
-        const token = Cookies.get('token');
+        const fetchedToken = Cookies.get('token');  // Fetch token from cookies
+        setToken(fetchedToken);  // Set token state
 
         if (storedUsername) {
             setUsername(storedUsername);
@@ -39,8 +41,8 @@ const Header = () => {
                     headers: {
                         'Content-Type': 'application/json',
                         'x-api-key': process.env.REACT_APP_API_KEY,
-                        'Authorization': `Bearer ${token}`,
-                      },
+                        'Authorization': `Bearer ${fetchedToken}`,  // Use fetchedToken here
+                    },
                 });
 
                 if (!response.ok) {
@@ -55,7 +57,7 @@ const Header = () => {
             }
         };
 
-        if (token) {
+        if (fetchedToken) {
             fetchUserRole();
         } else {
             setIsAdmin(false);
@@ -120,7 +122,7 @@ const Header = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'x-api-key': process.env.REACT_APP_API_KEY,
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${token}`,  // Use token from state
                 },
                 body: JSON.stringify(newJob)
             });
