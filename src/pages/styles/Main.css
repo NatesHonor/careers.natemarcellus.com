@@ -1,64 +1,125 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
 .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-  }
-  
-  .hero {
+}
+
+.hero {
     text-align: center;
-    margin-bottom: 40px;
-  }
-  
-  .hero h1 {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hero h1 {
     font-size: 2.5em;
-    margin-bottom: 10px;
-  }
-  
-  .hero p {
+    margin-bottom: 15px;
+}
+
+.hero p {
     font-size: 1.2em;
-    margin-bottom: 20px;
-  }
-  
-  .primary-button, .secondary-button {
-    padding: 10px 20px;
+    margin-bottom: 25px;
+}
+
+.primary-button,
+.secondary-button {
+    padding: 15px 30px;
     margin: 10px;
     border: none;
     cursor: pointer;
-  }
-  
-  .primary-button {
-    background-color: #007bff;
+    border-radius: 6px;
+    font-size: 1.1em;
+    transition: background-color 0.3s;
+}
+
+.primary-button {
+    background-color: #28a745;
     color: white;
-  }
-  
-  .secondary-button {
+}
+
+.primary-button:hover {
+    background-color: #218838;
+}
+
+.secondary-button {
     background-color: #6c757d;
     color: white;
-  }
-  
-  .features {
-    margin-bottom: 40px;
-  }
-  
-  .features h2 {
+}
+
+.secondary-button:hover {
+    background-color: #5a6268;
+}
+
+.features,
+.testimonials,
+.browse-jobs {
+    margin: 40px 0;
+}
+
+.features h2,
+.testimonials h2,
+.browse-jobs h2 {
     text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .feature {
-    margin-bottom: 20px;
-  }
-  
-  .testimonials {
-    margin-bottom: 40px;
-  }
-  
-  .testimonials h2 {
+    margin-bottom: 25px;
+    font-size: 2.5em;
+    color: #007bff;
+}
+
+.feature,
+.testimonial {
+    margin-bottom: 30px;
     text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .testimonial {
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  
+}
+
+.testimonial {
+    font-style: italic;
+    font-size: 1em;
+    color: #555;
+}
+
+.job-categories {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px 0;
+    scrollbar-width: thin;
+}
+
+.job-categories::-webkit-scrollbar {
+    height: 8px;
+}
+
+.job-categories::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 10px;
+}
+
+.category-box {
+    min-width: 300px;
+    height: 180px;
+    background-color: #ffcc00;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 1.2em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.category-box:hover {
+    transform: scale(1.05);
+    background-color: #ffd700;
+    cursor: pointer;
+}
