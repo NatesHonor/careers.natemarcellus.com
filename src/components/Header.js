@@ -12,7 +12,10 @@ const Header = () => {
         customQuestions: '',
         company: '',
         tags: [],
-        category: ''
+        category: '',
+        positions: 1,
+        salary: '',
+        type: ''
     });
     const [isPosting, setIsPosting] = useState(false);
     const [postError, setPostError] = useState(null);
@@ -23,6 +26,20 @@ const Header = () => {
         setNewJob((prevJob) => ({
             ...prevJob,
             [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    const handlePositionChange = (e) => {
+        setNewJob((prevJob) => ({
+            ...prevJob,
+            positions: Number(e.target.value) // Ensure it's a number
+        }));
+    };
+
+    const handleSalaryChange = (e) => {
+        setNewJob((prevJob) => ({
+            ...prevJob,
+            salary: e.target.value // Capture salary as a string
         }));
     };
 
@@ -77,7 +94,10 @@ const Header = () => {
                 customQuestions: '',
                 company: '',
                 tags: [],
-                category: ''
+                category: '',
+                positions: 1,
+                salary: '',
+                type: ''
             });
             window.location.reload();
         } catch (error) {
@@ -167,6 +187,42 @@ const Header = () => {
                             <option value="">Select a company</option>
                             <option value="FakeNetwork">Fake Network</option>
                             <option value="Nates Services">Nates Services</option>
+                        </select>
+                    </label>
+                    <label>
+                        Positions:
+                        <input
+                            type="number"
+                            name="positions"
+                            value={newJob.positions}
+                            onChange={handlePositionChange}
+                            min="1" // Ensure positions cannot be lower than 1
+                            required
+                        />
+                    </label>
+                    <label>
+                        Salary:
+                        <input
+                            type="text"
+                            name="salary"
+                            value={newJob.salary}
+                            onChange={handleSalaryChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Type:
+                        <select
+                            name="type"
+                            value={newJob.type}
+                            onChange={handleInputChange}
+                            required
+                        >
+                            <option value="">Select Job Type</option>
+                            <option value="Full Time">Full Time</option>
+                            <option value="Part Time">Part Time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Seasonal">Seasonal</option>
                         </select>
                     </label>
                     <label>
