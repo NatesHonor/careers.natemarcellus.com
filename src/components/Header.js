@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
+import categories from '../components/Categories';
 
-const Header = ({ onJobPost }) => {
+const Header = () => {
     const [newJob, setNewJob] = useState({
         jobTitle: '',
         remote: false,
@@ -68,9 +69,6 @@ const Header = ({ onJobPost }) => {
             if (!response.ok) {
                 throw new Error('Failed to post the job listing');
             }
-
-            const data = await response.json();
-            onJobPost(data);
             setNewJob({
                 jobTitle: '',
                 remote: false,
@@ -81,6 +79,7 @@ const Header = ({ onJobPost }) => {
                 tags: [],
                 category: ''
             });
+            window.location.reload();
         } catch (error) {
             setPostError(error.message);
         } finally {
@@ -179,6 +178,11 @@ const Header = ({ onJobPost }) => {
                             required
                         >
                             <option value="">Select a category</option>
+                            {categories.map((category) => (
+                                <option key={category.name} value={category.name}>
+                                    {category.name}
+                                </option>
+                            ))}
                         </select>
                     </label>
                     <label>
