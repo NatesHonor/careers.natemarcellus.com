@@ -1,0 +1,64 @@
+.main-content {
+    padding: 20px;
+  }
+  
+  .hero {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .hero h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+  
+  .hero p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+  
+  .primary-button, .secondary-button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .primary-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .secondary-button {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .features {
+    margin-bottom: 40px;
+  }
+  
+  .features h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .feature {
+    margin-bottom: 20px;
+  }
+  
+  .testimonials {
+    margin-bottom: 40px;
+  }
+  
+  .testimonials h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .testimonial {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  

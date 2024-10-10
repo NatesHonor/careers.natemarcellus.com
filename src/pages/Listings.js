@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './styles/Listings.css';
 
 const Listings = () => {
   const [jobs, setJobs] = useState([]);
@@ -31,26 +32,34 @@ const Listings = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading job listings...</div>;
+    return <div className="loading">Loading job listings...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="error">Error: {error}</div>;
   }
 
   return (
     <div className="listings-page">
-      <h1>Job Listings</h1>
+      <h1 className="listings-title">Available Job Listings</h1>
       {jobs.length === 0 ? (
-        <p>No job listings available at the moment.</p>
+        <p className="no-jobs">No job listings available at the moment.</p>
       ) : (
         <ul className="job-list">
           {jobs.map((job) => (
             <li key={job.jobID} className="job-item">
-              <h2>{job.jobTitle}</h2>
-              <p>{job.shortDescription}</p>
-              <p><strong>Remote:</strong> {job.remote ? 'Yes' : 'No'}</p>
-              <p><strong>Posted on:</strong> {new Date(job.postingDate).toLocaleDateString()}</p>
+              <div className="job-info">
+                <h2 className="job-title">{job.jobTitle}</h2>
+                <p className="job-description">{job.shortDescription}</p>
+                <div className="job-details">
+                  <span className="job-remote">
+                    <strong>Remote:</strong> {job.remote ? 'Yes' : 'No'}
+                  </span>
+                  <span className="job-date">
+                    <strong>Posted on:</strong> {new Date(job.postingDate).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
             </li>
           ))}
         </ul>
