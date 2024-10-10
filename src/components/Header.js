@@ -26,11 +26,39 @@ const Header = () => {
 
     useEffect(() => {
         const storedUsername = Cookies.get('username');
-        const role = Cookies.get('role');
+        const token = Cookies.get('token');
+
         if (storedUsername) {
             setUsername(storedUsername);
         }
-        setIsAdmin(role === 'administrator');
+
+        const fetchUserRole = async () => {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/role`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user role');
+                }
+
+                const data = await response.json();
+                setIsAdmin(data.role === 'administrator');
+            } catch (error) {
+                console.error(error);
+                setIsAdmin(false);
+            }
+        };
+
+        if (token) {
+            fetchUserRole();
+        } else {
+            setIsAdmin(false);
+        }
     }, []);
 
     const handleInputChange = (e) => {
