@@ -1,14 +1,50 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './styles/Main.css';
 
+const categories = [
+  'Design and Creative',
+  'Software Engineering',
+  'Marketing and Sales',
+  'Finance and Accounting',
+  'Human Resources',
+  'Operations and Management',
+  'Customer Service',
+  'Product Management',
+  'Data Science and Analytics',
+  'Information Technology',
+  'Education and Training',
+  'Healthcare',
+  'Legal Services',
+  'Manufacturing and Production',
+  'Research and Development',
+  'Administration and Support',
+  'Project Management',
+  'Cybersecurity',
+  'UX/UI Design',
+  'Web Development',
+  'Mobile Development',
+  'Game Development',
+  'Social Media Management',
+  'Content Creation',
+  'E-commerce',
+  'Consulting',
+  'Supply Chain Management',
+  'Telecommunications',
+  'Real Estate',
+  'Nonprofit and Community Services'
+];
+
 function Main() {
+  const navigate = useNavigate();
+
   return (
     <div className="main-content">
       <section className="hero">
         <h1>Find Your Dream Job</h1>
         <p>The EASIEST way to find a job that fits YOU.</p>
-        <button className="primary-button">Looking for a job?</button>
-        <button className="secondary-button">View Testimonials</button>
+        <button className="primary-button" onClick={() => navigate('/listings')}>Looking for a job?</button>
+        <button className="secondary-button" onClick={() => navigate('/staff')}>View Testimonials</button>
       </section>
 
       <section className="features">
@@ -36,6 +72,17 @@ function Main() {
         <div className="testimonial">
           <p>"The personalized job matches were spot on. Highly recommend!"</p>
           <p>- John Smith</p>
+        </div>
+      </section>
+
+      <section className="browse-jobs">
+        <h2>Browse from Our Top Jobs</h2>
+        <div className="job-categories">
+          {categories.map((category, index) => (
+            <div className="category-box" key={index}>
+              {category}
+            </div>
+          ))}
         </div>
       </section>
     </div>
