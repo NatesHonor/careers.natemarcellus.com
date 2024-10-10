@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie'; // Importing js-cookie
 import './Header.css';
 import categories from '../components/Categories';
 
@@ -20,6 +21,14 @@ const Header = () => {
     const [isPosting, setIsPosting] = useState(false);
     const [postError, setPostError] = useState(null);
     const [showPostForm, setShowPostForm] = useState(false);
+    const [username, setUsername] = useState('');
+
+    useEffect(() => {
+        const storedUsername = Cookies.get('username');
+        if (storedUsername) {
+            setUsername(storedUsername);
+        }
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -125,12 +134,17 @@ const Header = () => {
                 </ul>
             </nav>
             <div className="header-right">
+                {username ? (
+                    <span>Hello, {username}</span> // Greet the user if they are logged in
+                ) : (
+                    <button className="login-button" onClick={handleLoginClick}>Login</button>
+                )}
                 <button className="post-button" onClick={togglePostForm}>Post Job</button>
-                <button className="login-button" onClick={handleLoginClick}>Login</button>
             </div>
             {showPostForm && (
                 <form className="post-job-form" onSubmit={handleSubmit}>
                     <h2>Post a New Job</h2>
+                    {/* Form fields */}
                     <label>
                         Job Title:
                         <input
@@ -196,7 +210,7 @@ const Header = () => {
                             name="positions"
                             value={newJob.positions}
                             onChange={handlePositionChange}
-                            min="1" // Ensure positions cannot be lower than 1
+                            min="1"
                             required
                         />
                     </label>
