@@ -86,6 +86,9 @@ const Listings = () => {
 
     return (
         <div className="listings-container">
+            <div classname="listings-title">
+            <h2>Careers</h2>
+            </div>
             <div className="filter-section">
                 <h2>Filter</h2>
                 <label>
