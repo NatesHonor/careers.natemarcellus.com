@@ -37,9 +37,10 @@ const Header = () => {
                 const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/role`, {
                     method: 'GET',
                     headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': process.env.REACT_APP_API_KEY,
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
+                      },
                 });
 
                 if (!response.ok) {
