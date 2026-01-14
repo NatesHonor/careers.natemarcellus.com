@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios'; // Make sure to import axios
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './styles/bootstrap.min.css';
 import './styles/owl.carousel.min.css';
@@ -13,7 +14,6 @@ import './styles/style.css';
 import categories from '../components/Categories';
 import './styles/JobPage.css';
 
-// Function to fetch the category icon
 const getCategoryIcon = (categoryName) => {
     const category = categories.find((cat) => cat.name === categoryName);
     return category ? category.icon : null;
@@ -24,6 +24,15 @@ const JobPage = () => {
     const [job, setJob] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [formData, setFormData] = useState({
+        firstName: '',
+        discord: '',
+        age: '',
+        email: '',
+        website: '',
+        coverLetter: '',
+        resume: null,
+    });
 
     useEffect(() => {
         const fetchJobDetails = async () => {
@@ -63,6 +72,37 @@ const JobPage = () => {
             if (metaUrl) metaUrl.setAttribute('content', window.location.href);
         }
     }, [job]);
+
+    const handleChange = (e) => {
+        const { name, value, type, files } = e.target;
+        if (type === 'file') {
+            setFormData({ ...formData, [name]: files[0] });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const formDataToSubmit = new FormData();
+        for (const key in formData) {
+            formDataToSubmit.append(key, formData[key]);
+        }
+
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/apply`, formDataToSubmit, {
+                headers: {
+                    'x-api-key': process.env.REACT_APP_API_KEY,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            console.log('Application submitted successfully:', response.data);
+        } catch (error) {
+            console.error('Error submitting application:', error);
+        }
+    };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -169,16 +209,6 @@ const JobPage = () => {
                                             ))}
                                         </ul>
                                     </div>
-                                    {job.customQuestions.length > 0 && (
-                                        <div className="single_wrap">
-                                            <h4>Custom Questions</h4>
-                                            <ul>
-                                                {job.customQuestions.map((question, index) => (
-                                                    <li key={index}>{question}</li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    )}
                                     <div className="single_wrap">
                                         <h4>Benefits</h4>
                                         <ul>
@@ -191,39 +221,88 @@ const JobPage = () => {
 
                                 <div className="apply_job_form white-bg">
                                     <h4>Apply for the job</h4>
-                                    <form action="#!">
+                                    <form onSubmit={handleSubmit}>
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <div className="input_field">
-                                                    <input type="text" placeholder="Your name" required />
+                                                    <input
+                                                        type="text"
+                                                        name="firstName"
+                                                        placeholder="Firstname/Nickname"
+                                                        value={formData.firstName}
+                                                        onChange={handleChange}
+                                                        required
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="input_field">
-                                                    <input type="email" placeholder="Email" required />
+                                                    <input
+                                                        type="text"
+                                                        name="discord"
+                                                        placeholder="Discord"
+                                                        value={formData.discord}
+                                                        onChange={handleChange}
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="input_field">
+                                                    <input
+                                                        type="text"
+                                                        name="age"
+                                                        placeholder="Age"
+                                                        value={formData.age}
+                                                        onChange={handleChange}
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="input_field">
+                                                    <input
+                                                        type="email"
+                                                        name="email"
+                                                        placeholder="Email"
+                                                        value={formData.email}
+                                                        onChange={handleChange}
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="input_field">
+                                                    <input
+                                                        type="text"
+                                                        name="website"
+                                                        placeholder="Website/Portfolio link"
+                                                        value={formData.website}
+                                                        onChange={handleChange}
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="col-md-12">
                                                 <div className="input_field">
-                                                    <input type="text" placeholder="Website/Portfolio link" />
-                                                </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <div className="input-group">
-                                                    <div className="input-group-prepend">
-                                                        <button type="button" id="inputGroupFileAddon03">
-                                                            <i className="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div className="custom-file">
-                                                        <input type="file" className="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" />
-                                                        <label className="custom-file-label" htmlFor="inputGroupFile03">Upload CV</label>
-                                                    </div>
+                                                    <textarea
+                                                        name="coverLetter"
+                                                        cols="30"
+                                                        rows="10"
+                                                        placeholder="Cover letter"
+                                                        value={formData.coverLetter}
+                                                        onChange={handleChange}
+                                                        required
+                                                    ></textarea>
                                                 </div>
                                             </div>
                                             <div className="col-md-12">
                                                 <div className="input_field">
-                                                    <textarea name="#" id="" cols="30" rows="10" placeholder="Cover letter" required></textarea>
+                                                    <input
+                                                        type="file"
+                                                        name="resume"
+                                                        onChange={handleChange}
+                                                        required
+                                                    />
                                                 </div>
                                             </div>
                                             <div className="col-md-12">
